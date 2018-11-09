@@ -38,6 +38,12 @@ public class LoginServlet extends HttpServlet {
 			forward("/user/login_failed.jsp",req,resp);
 		}
 	}
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		forward("/user/login.jsp",req,resp);
+	}
+
 	private void forward(String forwardUrl,HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		RequestDispatcher rd = req.getRequestDispatcher(forwardUrl);
 		rd.forward(req, resp);

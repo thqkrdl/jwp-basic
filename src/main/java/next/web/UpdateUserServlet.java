@@ -21,12 +21,17 @@ public class UpdateUserServlet extends HttpServlet {
 			LoggerFactory.getLogger(UpdateUserServlet.class);
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		User user =new User(req.getParameter("userId"),
+		String userId = req.getParameter("userId");
+		User user = DataBase.findUserById(userId);
+		if(!UserSessionUtils.isSameUser(req.getSession(), user)) {
+			throw new IllegalStateException("다른사람의 정보 수정 안되안되안되요");
+		}
+		User updateUser =new User(req.getParameter("userId"),
 				req.getParameter("password"),
 				req.getParameter("name"),
 				req.getParameter("email"));
-			log.debug("User : {} ",user);
-			DataBase.addUser(user);
+			log.debug("User : {} ", updateUser);
+			DataBase.addUser( updateUser);
 			resp.sendRedirect("/user/list");
 	
 	}
