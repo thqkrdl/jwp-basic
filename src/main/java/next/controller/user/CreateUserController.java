@@ -1,4 +1,6 @@
-package next.controller;
+package next.controller.user;
+
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import core.db.DataBase;
 import core.mvc.Controller;
+import next.dao.UserDao;
 import next.model.User;
 
 public class CreateUserController implements Controller {
@@ -18,7 +21,12 @@ public class CreateUserController implements Controller {
         User user = new User(req.getParameter("userId"), req.getParameter("password"), req.getParameter("name"),
                 req.getParameter("email"));
         log.debug("User : {}", user);
-
+        UserDao userDao = new UserDao();
+        try {
+        	userDao.insert(user);
+        }catch(SQLException e) {
+        	log.debug(e.getMessage());
+        }
         DataBase.addUser(user);
         return "redirect:/";
     }
