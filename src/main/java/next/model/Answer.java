@@ -8,6 +8,7 @@ public class Answer {
 	private String contents;
 	private Date createdDate;
 	private long questionId;
+	private int countOfAnswer;
 	
 	public Answer(String writer,String contents,long questionId) {
 		this(0,writer,contents,new Date(),0);
@@ -38,6 +39,12 @@ public class Answer {
 	}
 	public long getquestionId() {
 		return questionId;
+	}
+	public int getCountOfAnswer() {
+		return countOfAnswer;
+	}
+	public void setCountOfAnswer(int count) {
+		this.countOfAnswer = count;
 	}
 	@Override
 	public int hashCode() {

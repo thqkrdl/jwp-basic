@@ -12,12 +12,10 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import next.model.User;
 
 public class UserDao {
-	private static final Logger logger = LoggerFactory.getLogger(UserDao.class);
 
     public void insert(User user) throws SQLException {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-        logger.debug("User : {}", user );
+        String sql = "INSERT INTO USERS VALUES (?, ?, ?, ?)";      
         jdbcTemplate.update(sql,user.getUserId(),user.getPassword(),user.getName(),user.getEmail());
     }
     
@@ -32,7 +30,7 @@ public class UserDao {
 @SuppressWarnings("unchecked")
     public List<User> findAll() throws SQLException {
     	JdbcTemplate jdbcTemplate = new JdbcTemplate();
-    	String sql ="SELECT userId, password, name, email FROM USERS WHERE userid=?";
+    	String sql ="SELECT userId, password, name, email FROM USERS";
     	return (List<User>) jdbcTemplate.query(sql,(ResultSet rs)-> {
      	   return new User(
     			   rs.getString("userId"),
@@ -49,7 +47,7 @@ public class UserDao {
         	
 
             String sql = "SELECT userId, password, name, email FROM USERS WHERE userid=?";
-           return jdbcTemplate.queryForObject(sql,(ResultSet rs)-> {
+           return (User) jdbcTemplate.queryForObject(sql,(ResultSet rs)-> {
         	   return new User(
         			   rs.getString("userId"),
         			   rs.getString("password"),
@@ -59,27 +57,3 @@ public class UserDao {
     }
 }
     
-    
-/*    public String createQueryForInsert() {
-    	return "INSERT INTO USERS VALUES (?, ?, ?, ?)";
-    
-    }
-    public String createQueryForUpdate() {
-    	return  "UPDATE USERS SET password=?,name=?,"
-        		+"email=? WHERE userId=?";
-    	
-    }
-    public void setValueForInsert(User user,PreparedStatement pstmt) throws SQLException {
-    	pstmt.setString(1, user.getUserId());
-        pstmt.setString(2, user.getPassword());
-        pstmt.setString(3, user.getName());
-        pstmt.setString(4, user.getEmail());
-
-    }
-    public void setValueForUpdate(User user,PreparedStatement pstmt) throws SQLException {
-    	pstmt.setString(1, user.getPassword());
-        pstmt.setString(2, user.getName());
-        pstmt.setString(3, user.getEmail());
-        pstmt.setString(4, user.getUserId());
-    }
-}*/
