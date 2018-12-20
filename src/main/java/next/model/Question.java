@@ -40,6 +40,10 @@ public class Question {
 	public int getCountOfAnswer() {
 		return countOfAnswer;
 	}
+	public void update(Question newQuestion) {
+		this.title = newQuestion.title;
+		this.contents = newQuestion.contents;
+	}
 	@Override
 	public int hashCode() {
 		final int  prime =31;
@@ -67,6 +71,8 @@ public class Question {
 		return "Question [questionId="+questionId+",writer="+writer+",title="+title+""
 				+ ",contents="+contents+",createdDate="+createdDate+",countOfAnswer="+countOfAnswer+"]";
 	}
+	
+	
 	
 }
 

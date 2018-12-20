@@ -54,6 +54,9 @@ public class Answer {
 		result = prime *result +(int)(answerId^(answerId>>>32));
 		return result;
 	}
+	public void update(Answer newAnswer) {
+		this.contents = newAnswer.contents;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if(this == obj) 
